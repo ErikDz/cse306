@@ -59,3 +59,10 @@ These references can provide valuable insights and techniques for implementing a
 - The OpenMP library (https://www.openmp.org/) for enabling parallel rendering.
 
 Feel free to explore and modify the code to experiment with different scenes, materials, and rendering techniques. Happy ray tracing!
+
+
+---
+
+cd build
+cmake ..
+cmake --build .

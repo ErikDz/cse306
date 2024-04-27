@@ -73,15 +73,15 @@ CMakeFiles/Raytracer.dir/main.cpp.o: CMakeFiles/Raytracer.dir/flags.make
 CMakeFiles/Raytracer.dir/main.cpp.o: /Users/erikdz/Documents/CSE306/Ray\ Tracer/main.cpp
 CMakeFiles/Raytracer.dir/main.cpp.o: CMakeFiles/Raytracer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/erikdz/Documents/CSE306/Ray Tracer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Raytracer.dir/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Raytracer.dir/main.cpp.o -MF CMakeFiles/Raytracer.dir/main.cpp.o.d -o CMakeFiles/Raytracer.dir/main.cpp.o -c "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Raytracer.dir/main.cpp.o -MF CMakeFiles/Raytracer.dir/main.cpp.o.d -o CMakeFiles/Raytracer.dir/main.cpp.o -c "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp"
 
 CMakeFiles/Raytracer.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Raytracer.dir/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp" > CMakeFiles/Raytracer.dir/main.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp" > CMakeFiles/Raytracer.dir/main.cpp.i
 
 CMakeFiles/Raytracer.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Raytracer.dir/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp" -o CMakeFiles/Raytracer.dir/main.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp" -o CMakeFiles/Raytracer.dir/main.cpp.s
 
 # Object files for target Raytracer
 Raytracer_OBJECTS = \

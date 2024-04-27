@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/erikdz/Documents/CSE306/Ray Tracer/build",
+  "command": "/usr/bin/clang++  -I\"/Users/erikdz/Documents/CSE306/Ray Tracer/stb\" -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -o CMakeFiles/Raytracer.dir/main.cpp.o -c \"/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp\"",
+  "file": "/Users/erikdz/Documents/CSE306/Ray Tracer/main.cpp",
+  "output": "CMakeFiles/Raytracer.dir/main.cpp.o"
+}
+]
