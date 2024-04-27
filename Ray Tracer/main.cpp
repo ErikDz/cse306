@@ -411,7 +411,7 @@ Intersection intersect(const Ray& ray) override {
         if (alpha >= 0 && beta >= 0 && gamma >= 0 && t > 0 && t < tMin) {
             tMin = t;
             intersection.intersects = true;
-            intersection.refractiveIndex = t;
+            intersection.distance = t;
             intersection.position = vertexA + beta * edge1 + gamma * edge2;
             intersection.normal = normal;
         }
@@ -624,10 +624,15 @@ int main() {
     scene.addGeometry(left);
     scene.addGeometry(right);
 
-    TriangleMesh cat = TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.));
+    //TriangleMesh cat = TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.));
+    //TriangleMesh cat = TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.), 1.0, false);
+    TriangleMesh* cat = new TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.), 1.0, false);
+
     //cat.readOBJ("cat_files/cat.obj");
-    cat.readOBJ("cat_files/cat.obj");
-    scene.addGeometry(&cat);
+    //cat.readOBJ("cat_files/cat.obj");
+    cat->readOBJ("cat_files/cat.obj");
+    scene.addGeometry(cat);
+    //scene.addGeometry(&cat);
 
     int imageWidth = 256;
     int imageHeight = 256;
