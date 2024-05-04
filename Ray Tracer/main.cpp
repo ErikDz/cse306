@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cfloat>
 #include <tuple>
+#include <list>
 //#include "omp.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -123,6 +124,7 @@ public:
 
 class BoundingBox {
 public:
+    BoundingBox() {};
     Vector minPoint;
     Vector maxPoint;
 
@@ -130,6 +132,17 @@ public:
         minPoint = min;
         maxPoint = max;
     }
+};
+
+struct Node {
+    BoundingBox bounding_box;
+    Node* c_left;
+    Node* c_right;
+
+    int start_trig;
+    int end_trig;
+
+    Node() : c_left(nullptr), c_right(nullptr), start_trig(0), end_trig(0) {}
 };
 
 class TriangleIndices {
@@ -156,6 +169,8 @@ public:
     std::vector<Vector> normals;
     std::vector<Vector> uvs;
     std::vector<Vector> vertexcolors;
+    Node* root;
+    BoundingBox bounding_box;
 
     ~TriangleMesh() {}
     TriangleMesh(double scaling_factor,
@@ -168,6 +183,7 @@ public:
         this->color = color;
         this->refractive_index = refractive_index;
         this->reflects = reflects;
+        this->root = new Node;
     };
 
     /*  ---------------------------- READ OBJ -------------------------------   */
@@ -343,10 +359,12 @@ public:
 
         }
         fclose(f);
+        this-> BuildBVH(root, 0, indices.size());
     }
 
-    /*  ------------------------ Bounding Box Auxiliary ------------------------   */
 
+
+// AUX FOR THE BOUNDING BOX
 BoundingBox calculateBoundingBox() {
     double minX{DBL_MAX}, minY{DBL_MAX}, minZ{DBL_MAX};
     double maxX{DBL_MIN}, maxY{DBL_MIN}, maxZ{DBL_MIN};
@@ -371,7 +389,7 @@ std::tuple<double, double> calculateRayPlaneIntersection(const Vector& normal, c
     return std::make_tuple(t0, t1);
 }
 
-bool doesRayIntersectBoundingBox(const Ray& ray) {
+bool doesRayIntersectBoundingBox(const Ray& ray, BoundingBox bounding_box, double* t) {
     BoundingBox box = calculateBoundingBox();
 
     // Check for ray-plane intersection along each axis
@@ -382,19 +400,79 @@ bool doesRayIntersectBoundingBox(const Ray& ray) {
     double tMin = std::min(std::min(txMax, tyMax), tzMax);
     double tMax = std::max(std::max(txMin, tyMin), tzMin);
 
+    *t = (tMin> tMax) ? tMax : *t;
     return (tMin > tMax);
 }
 
-/*  ------------------------ Intersection ------------------------   */
+Vector CalculateBarycenter(int triangleIndex) {
+    // Calculate the vertices of the triangle with the given index
+    Vector v1 = (scaling_factor * this->vertices[this->indices[triangleIndex].vtxi]) + translation;
+    Vector v2 = (scaling_factor * this->vertices[this->indices[triangleIndex].vtxj]) + translation;
+    Vector v3 = (scaling_factor * this->vertices[this->indices[triangleIndex].vtxk]) + translation;
+    
+    // Return the barycenter (average) of the three vertices
+    return (v1 + v2 + v3) / 3.0;
+}
 
+void PartitionTriangles(int startTriangle, int endTriangle, int& pivotIndex, int longestAxis, const Vector& middlePoint) {
+    // Partition the triangles based on the barycenter along the longest axis
+    for (int i = startTriangle; i < endTriangle; i++) {
+        Vector barycenter = this->CalculateBarycenter(i);
+        if (barycenter[longestAxis] < middlePoint[longestAxis]) {
+            std::swap(indices[i], indices[pivotIndex]);
+            pivotIndex++;
+        }
+    }
+}
+
+void BuildBVH(Node* node, int startTriangle, int endTriangle) {
+    // Set the bounding box and triangle range for the current node
+    node->bounding_box = this->calculateBoundingBox();
+    node->start_trig = startTriangle;
+    node->end_trig = endTriangle;
+
+    // Calculate the diagonal and middle point of the bounding box
+    Vector diagonal = node->bounding_box.maxPoint - node->bounding_box.minPoint;
+    Vector middlePoint = node->bounding_box.minPoint + diagonal * 0.5;
+    
+    // Determine the longest axis of the bounding box
+    int longestAxis = (abs(diagonal[0]) > abs(diagonal[1]) &&
+                       abs(diagonal[0]) > abs(diagonal[2])) ? 0 :
+                      (abs(diagonal[1]) > abs(diagonal[2])) ? 1 : 2;
+
+    int pivotIndex = startTriangle;
+
+    // Partition the triangles
+    PartitionTriangles(startTriangle, endTriangle, pivotIndex, longestAxis, middlePoint);
+
+    // Check if the partition is valid or if the triangle range is too small
+    if (pivotIndex <= startTriangle
+        || pivotIndex >= endTriangle - 1
+        || endTriangle - startTriangle < 5)
+        return;
+
+    // Create child nodes and recursively build the BVH for each child
+    node->c_left = new Node;
+    node->c_right = new Node;
+    this->BuildBVH(node->c_left, startTriangle, pivotIndex);
+    this->BuildBVH(node->c_right, pivotIndex, endTriangle);
+}
+
+
+// INTERSECTION CODE ================================================
 Intersection intersect(const Ray& ray) override {
-    if (!doesRayIntersectBoundingBox(ray))
-        return Intersection();
+    //if (!doesRayIntersectBoundingBox(ray))
+        //return Intersection();
 
     Intersection intersection(this->color, this->refractive_index, this->reflects);
-    Vector vertexA, vertexB, vertexC, edge1, edge2, normal;
+    //Vector vertexA, vertexB, vertexC, edge1, edge2, normal;
+    double t;
     double tMin{DBL_MAX};
+    if (!doesRayIntersectBoundingBox(ray, this->bounding_box, &t))
+        return Intersection();
 
+
+    /*
     for (const auto& index : indices) {
         vertexA = scaling_factor * vertices[index.vtxi] + translation;
         vertexB = scaling_factor * vertices[index.vtxj] + translation;
@@ -414,6 +492,56 @@ Intersection intersect(const Ray& ray) override {
             intersection.distance = t;
             intersection.position = vertexA + beta * edge1 + gamma * edge2;
             intersection.normal = normal;
+        }
+    }*/
+
+    std::list<Node*> nodesToVisit;
+    nodesToVisit.push_front(root);
+
+    // we start the while loop
+    while (!nodesToVisit.empty()){
+        Node *currentNode = nodesToVisit.back();
+        nodesToVisit.pop_back();
+
+        // if the current node is a leaf 
+        if (currentNode->c_left){
+            // if the ray intersects the bounding box of the current node
+            if (doesRayIntersectBoundingBox(ray, currentNode->c_left->bounding_box, &t)){
+                if (t<tMin){
+                    nodesToVisit.push_back(currentNode->c_left);
+                }
+            }
+            // same for the right child
+            if (doesRayIntersectBoundingBox(ray, currentNode->c_right->bounding_box, &t)){
+                if (t<tMin){
+                    nodesToVisit.push_back(currentNode->c_right);
+                }
+            }
+        } else{
+            // else
+
+            Vector vertexA, vertexB, vertexC, edge1, edge2, normal;
+            for (const auto& index : indices) {
+                vertexA = scaling_factor * vertices[index.vtxi] + translation;
+                vertexB = scaling_factor * vertices[index.vtxj] + translation;
+                vertexC = scaling_factor * vertices[index.vtxk] + translation;
+                edge1 = vertexB - vertexA;
+                edge2 = vertexC - vertexA;
+                normal = cross(edge1, edge2);
+
+                double beta = dot(cross(vertexA - ray.origin, ray.direction), edge2) / dot(ray.direction, normal);
+                double gamma = -dot(cross(vertexA - ray.origin, ray.direction), edge1) / dot(ray.direction, normal);
+                double alpha = 1.0 - beta - gamma;
+                double t = dot(vertexA - ray.origin, normal) / dot(ray.direction, normal);
+
+                if (alpha >= 0 && beta >= 0 && gamma >= 0 && t > 0 && t < tMin) {
+                    tMin = t;
+                    intersection.intersects = true;
+                    intersection.distance = t;
+                    intersection.position = vertexA + beta * edge1 + gamma * edge2;
+                    intersection.normal = normal;
+                }
+            }
         }
     }
     return intersection;
@@ -474,6 +602,7 @@ private:
     std::vector<Geometry*> geometries;
     Vector lightSource;
     double lightIntensity = 1e5;
+    //double lightIntensity = 1e4;
 
 public:
     explicit Scene(Vector lightSource) { this->lightSource = lightSource; }
@@ -641,7 +770,7 @@ int main() {
     double fieldOfView = degToRad(60);
     double gamma = 2.2;
     int maxDepth = 5;
-    int raysPerPixel = 10;
+    int raysPerPixel = 64;
 
     #pragma omp parallel for schedule(dynamic, 1)
     for (int y = 0; y < imageHeight; y++)
@@ -657,6 +786,7 @@ int main() {
                 Ray ray = Ray(camera, (pixel - camera).normalized());
                 pixelColor = pixelColor + scene.getColor(ray, maxDepth);
             }
+            //pixelColor = pixelColor/raysPerPixel;
 
             image[(y * imageWidth + x) * 3 + 0] = std::min(255., pow(pixelColor[0] / raysPerPixel, 1. / gamma) * 255);
             image[(y * imageWidth + x) * 3 + 1] = std::min(255., pow(pixelColor[1] / raysPerPixel, 1. / gamma) * 255);
