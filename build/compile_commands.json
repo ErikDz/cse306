@@ -1,7 +1,8 @@
 [
 {
   "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/build",
-  "command": "/usr/lib64/ccache/g++ -I\"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/stb\" -O3 -DNDEBUG -fopenmp -std=gnu++17 -o CMakeFiles/Raytracer.dir/main.cpp.o -c \"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/main.cpp\"",
-  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/main.cpp"
+  "command": "/usr/lib64/ccache/g++ -I\"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/stb\" -O3 -DNDEBUG -std=gnu++17 -fopenmp -o CMakeFiles/Raytracer.dir/main.cpp.o -c \"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/main.cpp\"",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Ray Tracer/main.cpp",
+  "output": "CMakeFiles/Raytracer.dir/main.cpp.o"
 }
 ]

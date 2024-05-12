@@ -1,0 +1,4 @@
+rays: 600
+dim: 1024x1024
+max_depth:20
+gamma:2.2

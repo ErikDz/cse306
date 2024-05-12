@@ -10,6 +10,11 @@
 #include <list>
 //#include "omp.h"
 
+/*
+NOTE TO SELF:
+REMEMBER TO CD TO BUILD BEFORE BUILDING!!!
+*/
+
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "./stb/stb_image_write.h"
 
@@ -113,14 +118,12 @@ public:
 
 
 
-/*  --------------------------------- GEOMETRY ---------------------------------   */
 
 class Geometry {
 public:
     virtual Intersection intersect(const Ray& ray) = 0;
 };
 
-/*  --------------------------------- MESH ---------------------------------   */
 
 class BoundingBox {
 public:
@@ -186,7 +189,6 @@ public:
         this->root = new Node;
     };
 
-    /*  ---------------------------- READ OBJ -------------------------------   */
 
     void readOBJ(const char* obj) {
 
@@ -702,8 +704,8 @@ public:
             color = lightIntensity / (4 * M_PI * distance * distance) * intersection.color / M_PI * visibility * std::max(0., dot(lightDirection, localNormal));
 
             // Indirect lighting
-            Ray randomRay = Ray(localPosition, randomCosineDirection(localNormal));
-            color = color + intersection.color * getColor(randomRay, depth - 1);
+            //Ray randomRay = Ray(localPosition, randomCosineDirection(localNormal));
+            //color = color + intersection.color * getColor(randomRay, depth - 1);
         }
 
         return color;
@@ -719,14 +721,26 @@ void BoxMuller(double stdev, double& x, double& y) {
 }
 
 int main() {
+
+    //timer
+    auto start = std::chrono::high_resolution_clock::now();
+
     // Create a scene with a light source
     Scene scene = Scene(Vector(-10, 20, 40));
 
     // Create spheres with different properties
-    Sphere* mirror = new Sphere(Vector(20, 0, 0), 10, Vector(1., 1., 1.), true, 1.5);
-    Sphere* refracted = new Sphere(Vector(0, 0, 0), 10, Vector(1., 1., 1.), false, 1.5);
-    Sphere* hollowOuter = new Sphere(Vector(-20, 0, 0), 10, Vector(1., 1., 1.), false, 1.5);
-    Sphere* hollowInner = new Sphere(Vector(-20, 0, 0), 9.8, Vector(1., 1., 1.), false, 1.5, true);
+//    Sphere* mirror = new Sphere(Vector(20, 0, 0), 10, Vector(1., 1., 1.), true, 1.5);
+//    Sphere* refracted = new Sphere(Vector(0, 0, 0), 10, Vector(1., 1., 1.), false, 1.5);
+    Sphere* hollowOuter = new Sphere(Vector(0, 0, 0), 10, Vector(1., 1., 1.), false, 1.5);
+    Sphere* hollowInner = new Sphere(Vector(0, 0, 0), 9.8, Vector(1., 1., 1.), false, 1.5, true);
+//    Sphere* solid = new Sphere(Vector(-20, 0, 0), 9.8, Vector(1., 1., 1.), false, 0, false);
+//
+//    scene.addGeometry(mirror);
+//    scene.addGeometry(refracted);
+    scene.addGeometry(hollowOuter);
+    scene.addGeometry(hollowInner);
+//
+
     // Create spheres for the room
     Sphere* ceiling = new Sphere(Vector(0, 1000, 0), 940, Vector(1, 0, 0));
     Sphere* floor = new Sphere(Vector(0, -1000, 0), 990, Vector(0, 0, 1));
@@ -735,42 +749,31 @@ int main() {
     Sphere* left = new Sphere(Vector(1000, 0, 0), 940, Vector(0, 1, 1));
     Sphere* right = new Sphere(Vector(-1000, 0, 0), 940, Vector(0, 1, 1));
 
-    // Add spheres to the scene
-    //scene.addSphere(mirror);
-    //scene.addSphere(refracted);
-    //scene.addSphere(hollowOuter);
-    //scene.addSphere(hollowInner);
-    //scene.addSphere(ceiling);
-    //scene.addSphere(floor);
-    //scene.addSphere(front);
-    //scene.addSphere(back);
-    //scene.addSphere(left);
-    //scene.addSphere(right);
     scene.addGeometry(ceiling);
     scene.addGeometry(floor);
     scene.addGeometry(front);
     scene.addGeometry(back);
     scene.addGeometry(left);
     scene.addGeometry(right);
-
-    //TriangleMesh cat = TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.));
-    //TriangleMesh cat = TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.), 1.0, false);
-    TriangleMesh* cat = new TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.), 1.0, false);
-
+    
+    //Sphere* solid = new Sphere(Vector(0, 0, 0), 9.8, Vector(1, 1, 1));
+    //scene.addGeometry(solid);
+    //TriangleMesh* cat = new TriangleMesh(0.6, Vector(0, -10, 0), Vector(1., 1., 1.), 1.0, false);
     //cat.readOBJ("cat_files/cat.obj");
     //cat.readOBJ("cat_files/cat.obj");
-    cat->readOBJ("cat_files/cat.obj");
-    scene.addGeometry(cat);
-    //scene.addGeometry(&cat);
+    //cat->readOBJ("cat_files/cat.obj");
+    //scene.addGeometry(cat);
 
-    int imageWidth = 256;
-    int imageHeight = 256;
+    //int imageWidth = 1024;
+    //int imageHeight = 1024;
+    int imageWidth = 1024;
+    int imageHeight = 1024;
     std::vector<unsigned char> image(imageWidth * imageHeight * 3, 0);
     Vector camera = Vector(0, 0, 55);
     double fieldOfView = degToRad(60);
     double gamma = 2.2;
-    int maxDepth = 5;
-    int raysPerPixel = 64;
+    int maxDepth = 20;
+    int raysPerPixel = 600;
 
     #pragma omp parallel for schedule(dynamic, 1)
     for (int y = 0; y < imageHeight; y++)
@@ -792,6 +795,12 @@ int main() {
             image[(y * imageWidth + x) * 3 + 1] = std::min(255., pow(pixelColor[1] / raysPerPixel, 1. / gamma) * 255);
             image[(y * imageWidth + x) * 3 + 2] = std::min(255., pow(pixelColor[2] / raysPerPixel, 1. / gamma) * 255);
         }
+
+    // stop timing!
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "Time taken by function: " << duration.count() << " milliseconds" << std::endl;
+
 
     stbi_write_png("image.png", imageWidth, imageHeight, 3, &image[0], 0);
     return 0;
