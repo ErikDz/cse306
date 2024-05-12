@@ -2,17 +2,6 @@
 
 This project is a ray tracing renderer implemented in C++. It utilizes the principles of ray tracing to generate realistic 3D images by simulating the interaction of light with various objects in a scene.
 
-## Features
-
-- Supports rendering of spheres with different properties such as reflectivity, refraction, and hollowness.
-- Implements direct lighting and indirect lighting for accurate shading.
-- Supports reflection and refraction of light rays.
-- Uses the Box-Muller transform for generating random numbers.
-- Utilizes the cosine-weighted distribution for generating random directions.
-- Implements Fresnel's law for determining the reflection probability.
-- Supports rendering of a room with walls, ceiling, and floor.
-- Utilizes OpenMP for parallel rendering to improve performance.
-
 ## Dependencies
 
 - C++ compiler with C++11 support
@@ -28,7 +17,7 @@ This project is a ray tracing renderer implemented in C++. It utilizes the princ
 
 ## Possible References
 
-Here are some references that one could have used while writing this ray tracing renderer:
+Here are some references that were of aid  while writing this ray tracing renderer:
 
 1. "Physically Based Rendering: From Theory to Implementation" by Matt Pharr, Wenzel Jakob, and Greg Humphreys
    - This book provides a comprehensive guide to physically based rendering techniques, including ray tracing, shading, and global illumination.
