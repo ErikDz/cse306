@@ -473,30 +473,6 @@ Intersection intersect(const Ray& ray) override {
     if (!doesRayIntersectBoundingBox(ray, this->bounding_box, &t))
         return Intersection();
 
-
-    /*
-    for (const auto& index : indices) {
-        vertexA = scaling_factor * vertices[index.vtxi] + translation;
-        vertexB = scaling_factor * vertices[index.vtxj] + translation;
-        vertexC = scaling_factor * vertices[index.vtxk] + translation;
-        edge1 = vertexB - vertexA;
-        edge2 = vertexC - vertexA;
-        normal = cross(edge1, edge2);
-
-        double beta = dot(cross(vertexA - ray.origin, ray.direction), edge2) / dot(ray.direction, normal);
-        double gamma = -dot(cross(vertexA - ray.origin, ray.direction), edge1) / dot(ray.direction, normal);
-        double alpha = 1.0 - beta - gamma;
-        double t = dot(vertexA - ray.origin, normal) / dot(ray.direction, normal);
-
-        if (alpha >= 0 && beta >= 0 && gamma >= 0 && t > 0 && t < tMin) {
-            tMin = t;
-            intersection.intersects = true;
-            intersection.distance = t;
-            intersection.position = vertexA + beta * edge1 + gamma * edge2;
-            intersection.normal = normal;
-        }
-    }*/
-
     std::list<Node*> nodesToVisit;
     nodesToVisit.push_front(root);
 
