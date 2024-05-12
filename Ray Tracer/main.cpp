@@ -83,14 +83,6 @@ Vector operator*(const Vector &vector, double scalar)
 {
     return Vector(vector[0] * scalar, vector[1] * scalar, vector[2] * scalar);
 }
-Vector operator*(const Vector &a, const Vector &b)
-{
-    return Vector(a[0] * b[0], a[1] * b[1], a[2] * b[2]);
-}
-Vector operator/(const Vector &vector, double scalar)
-{
-    return Vector(vector[0] / scalar, vector[1] / scalar, vector[2] / scalar);
-}
 
 // used reference: https://www.geeksforgeeks.org/program-dot-product-cross-product-two-vector/
 //  Vector dot product
