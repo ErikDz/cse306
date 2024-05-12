@@ -83,6 +83,14 @@ Vector operator*(const Vector &vector, double scalar)
 {
     return Vector(vector[0] * scalar, vector[1] * scalar, vector[2] * scalar);
 }
+Vector operator*(const Vector &a, const Vector &b)
+{
+    return Vector(a[0] * b[0], a[1] * b[1], a[2] * b[2]);
+}
+Vector operator/(const Vector &vector, double scalar)
+{
+    return Vector(vector[0] / scalar, vector[1] / scalar, vector[2] / scalar);
+}
 
 // used reference: https://www.geeksforgeeks.org/program-dot-product-cross-product-two-vector/
 //  Vector dot product
@@ -1061,6 +1069,8 @@ int main()
     cat->readOBJ("cat_files/cat.obj");
     scene.addGeometry(cat);
 
+    // int imageWidth = 1024;
+    // int imageHeight = 1024;
     int imageWidth = 256;
     int imageHeight = 256;
     std::vector<unsigned char> image(imageWidth * imageHeight * 3, 0);
@@ -1068,9 +1078,9 @@ int main()
     double fieldOfView = degToRad(60);
     double gamma = 2.2;
     int maxDepth = 5;
-    int raysPerPixel = 60;
+    int raysPerPixel = 30;
 
-    #pragma omp parallel for schedule(dynamic, 1)
+#pragma omp parallel for schedule(dynamic, 1)
     for (int y = 0; y < imageHeight; y++)
         for (int x = 0; x < imageWidth; x++)
         {
