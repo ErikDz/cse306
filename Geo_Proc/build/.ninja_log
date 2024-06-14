@@ -1,0 +1,27 @@
+# ninja log v5
+1	407	1718363688318922000	CMakeFiles/lbfgs.dir/liblbfgs/lbfgs.c.o	8539934e6ec7e500
+5	680	1718364165659868000	CMakeFiles/Geometry.dir/fluid.cpp.o	4c565d7c5ce2cfc6
+408	440	1718363688367924000	liblbfgs.a	c230b98ae45fe0ec
+5	611	1718364165598872000	CMakeFiles/Geometry.dir/voronoi.cpp.o	4a6f1457c50da535
+5	606	1718364165588869000	CMakeFiles/Geometry.dir/utils/classes.cpp.o	c924960dae5c4df6
+5	1031	1718364165990871000	CMakeFiles/Geometry.dir/main.cpp.o	cda686637f61c51d
+5	520	1718364165506874000	CMakeFiles/Geometry.dir/gallouet.cpp.o	6f6bd75b9fcfb72f
+5	1481	1718364166428878000	CMakeFiles/Geometry.dir/rendering.cpp.o	d2b4853a993f8b01
+1481	1577	1718364166579876000	Geometry	d157c1e760177c02
+4	530	1718364598949854000	CMakeFiles/Geometry.dir/utils/svg.cpp.o	1b7c4164446a467a
+4	587	1718364599006849000	CMakeFiles/Geometry.dir/gallouet.cpp.o	6f6bd75b9fcfb72f
+4	644	1718364599063860000	CMakeFiles/Geometry.dir/utils/classes.cpp.o	c924960dae5c4df6
+4	645	1718364599067859000	CMakeFiles/Geometry.dir/voronoi.cpp.o	4a6f1457c50da535
+4	689	1718364599113861000	CMakeFiles/Geometry.dir/fluid.cpp.o	4c565d7c5ce2cfc6
+4	993	1718364599414856000	CMakeFiles/Geometry.dir/main.cpp.o	cda686637f61c51d
+4	1494	1718364599918862000	CMakeFiles/Geometry.dir/rendering.cpp.o	d2b4853a993f8b01
+1494	1557	1718364599994861000	Geometry	5f1ac5385db65bda
+3	933	1718364643472830000	CMakeFiles/Geometry.dir/main.cpp.o	cda686637f61c51d
+933	997	1718364643554828000	Geometry	5f1ac5385db65bda
+6	467	1718364994285797000	CMakeFiles/Geometry.dir/gallouet.cpp.o	6f6bd75b9fcfb72f
+6	534	1718364994351802000	CMakeFiles/Geometry.dir/voronoi.cpp.o	4a6f1457c50da535
+6	576	1718364994393797000	CMakeFiles/Geometry.dir/fluid.cpp.o	4c565d7c5ce2cfc6
+6	922	1718364994741819000	CMakeFiles/Geometry.dir/main.cpp.o	cda686637f61c51d
+922	981	1718364994814803000	Geometry	5f1ac5385db65bda
+3	891	1718365025224807000	CMakeFiles/Geometry.dir/main.cpp.o	cda686637f61c51d
+892	954	1718365025305810000	Geometry	5f1ac5385db65bda

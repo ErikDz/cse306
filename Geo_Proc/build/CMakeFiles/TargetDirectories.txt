@@ -1,0 +1,4 @@
+/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build/CMakeFiles/Geometry.dir
+/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build/CMakeFiles/lbfgs.dir
+/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build/CMakeFiles/edit_cache.dir
+/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build/CMakeFiles/rebuild_cache.dir

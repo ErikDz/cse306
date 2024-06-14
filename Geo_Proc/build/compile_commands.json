@@ -1,0 +1,50 @@
+[
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/main.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/main.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/main.cpp",
+  "output": "CMakeFiles/Geometry.dir/main.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/utils/classes.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils/classes.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils/classes.cpp",
+  "output": "CMakeFiles/Geometry.dir/utils/classes.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/voronoi.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/voronoi.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/voronoi.cpp",
+  "output": "CMakeFiles/Geometry.dir/voronoi.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/fluid.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/fluid.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/fluid.cpp",
+  "output": "CMakeFiles/Geometry.dir/fluid.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/rendering.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/rendering.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/rendering.cpp",
+  "output": "CMakeFiles/Geometry.dir/rendering.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/gallouet.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/gallouet.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/gallouet.cpp",
+  "output": "CMakeFiles/Geometry.dir/gallouet.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/g++ -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -std=gnu++17 -o CMakeFiles/Geometry.dir/utils/svg.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils/svg.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils/svg.cpp",
+  "output": "CMakeFiles/Geometry.dir/utils/svg.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/build",
+  "command": "/usr/lib64/ccache/gcc -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/stb -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs -I/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/utils -O3 -DNDEBUG -o CMakeFiles/lbfgs.dir/liblbfgs/lbfgs.c.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs/lbfgs.c",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geo_Proc/liblbfgs/lbfgs.c",
+  "output": "CMakeFiles/lbfgs.dir/liblbfgs/lbfgs.c.o"
+}
+]
