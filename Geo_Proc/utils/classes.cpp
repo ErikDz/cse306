@@ -1,13 +1,5 @@
 #include "classes.h"
 
-/*
-References:
-https://www.geeksforgeeks.org/area-of-a-polygon-with-given-n-ordered-vertices/
-
-====================================================================================================
-A big thanks to Milos Oundjian, he helped me a lot to debug this
-*/
-
 Vector operator+(const Vector& a, const Vector& b) {
     return Vector(a[0] + b[0], a[1] + b[1], a[2] + b[2]);
 }
