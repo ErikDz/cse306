@@ -4,5 +4,11 @@
   "command": "/usr/lib64/ccache/c++ -g -std=gnu++11 -Wall -Wextra -pedantic -o CMakeFiles/td9.dir/td9.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/td9.cpp",
   "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/td9.cpp",
   "output": "CMakeFiles/td9.dir/td9.cpp.o"
+},
+{
+  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/build",
+  "command": "/usr/lib64/ccache/c++ -g -std=gnu++11 -Wall -Wextra -pedantic -o CMakeFiles/td9.dir/classes.cpp.o -c /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/classes.cpp",
+  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/classes.cpp",
+  "output": "CMakeFiles/td9.dir/classes.cpp.o"
 }
 ]

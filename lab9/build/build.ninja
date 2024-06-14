@@ -55,6 +55,12 @@ build CMakeFiles/td9.dir/td9.cpp.o: CXX_COMPILER__td9_unscanned_Debug /users/ele
   OBJECT_DIR = CMakeFiles/td9.dir
   OBJECT_FILE_DIR = CMakeFiles/td9.dir
 
+build CMakeFiles/td9.dir/classes.cpp.o: CXX_COMPILER__td9_unscanned_Debug /users/eleves-a/2021/erik.dziekonski-bautista/CSE306/lab9/classes.cpp || cmake_object_order_depends_target_td9
+  DEP_FILE = CMakeFiles/td9.dir/classes.cpp.o.d
+  FLAGS = -g -std=gnu++11 -Wall -Wextra -pedantic
+  OBJECT_DIR = CMakeFiles/td9.dir
+  OBJECT_FILE_DIR = CMakeFiles/td9.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target td9
@@ -63,7 +69,7 @@ build CMakeFiles/td9.dir/td9.cpp.o: CXX_COMPILER__td9_unscanned_Debug /users/ele
 #############################################
 # Link the executable td9
 
-build td9: CXX_EXECUTABLE_LINKER__td9_Debug CMakeFiles/td9.dir/td9.cpp.o
+build td9: CXX_EXECUTABLE_LINKER__td9_Debug CMakeFiles/td9.dir/td9.cpp.o CMakeFiles/td9.dir/classes.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/td9.dir
   POST_BUILD = :

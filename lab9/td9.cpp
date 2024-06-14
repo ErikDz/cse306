@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "classes.h"
+#include <set>
 
 #define M_PI 3.14159265358979323846
 
@@ -448,62 +449,127 @@ class TriangleMesh
     }
 
     //PG 109!!!!
-    TriangleMesh tutte(int n_iter = 1000) {
-        std::vector<int> boundary;
-        std::map<Edge, int> edgeCount;
-        for (const auto& tri : indices) {
-            edgeCount[Edge(tri.vtxi, tri.vtxj)]++;
-            edgeCount[Edge(tri.vtxj, tri.vtxk)]++;
-            edgeCount[Edge(tri.vtxk, tri.vtxi)]++;
+
+      std::map<Edge, std::vector<int>> buildEdgesToTriangles() {
+    std::map<Edge, std::vector<int>> edges_to_triangles;
+    int n_triangles = indices.size();
+    for (int i = 0; i < n_triangles; ++i) {
+        edges_to_triangles[Edge(indices[i].vtxi, indices[i].vtxj)].push_back(i);
+        edges_to_triangles[Edge(indices[i].vtxj, indices[i].vtxk)].push_back(i);
+        edges_to_triangles[Edge(indices[i].vtxk, indices[i].vtxi)].push_back(i);
+    }
+    return edges_to_triangles;
+    }
+
+    std::map<int, std::set<int>> buildAdjacencyList() {
+        std::map<int, std::set<int>> adjacency_list;
+        int n_triangles = indices.size();
+        for (int i = 0; i < n_triangles; ++i) {
+            adjacency_list[indices[i].vtxi].insert(indices[i].vtxj);
+            adjacency_list[indices[i].vtxi].insert(indices[i].vtxk);
+            adjacency_list[indices[i].vtxj].insert(indices[i].vtxi);
+            adjacency_list[indices[i].vtxj].insert(indices[i].vtxk);
+            adjacency_list[indices[i].vtxk].insert(indices[i].vtxi);
+            adjacency_list[indices[i].vtxk].insert(indices[i].vtxj);
         }
-        for (const auto& edge : edgeCount) {
-            if (edge.second == 1) { // Boundary edge
-                boundary.push_back(edge.first.vtxA);
-                boundary.push_back(edge.first.vtxB);
+        return adjacency_list;
+    }
+
+    std::vector<Edge> findBoundaryEdges(const std::map<Edge, std::vector<int>>& edges_to_triangles) {
+        std::vector<Edge> boundary_edges;
+        for (const auto& [edge, triangles] : edges_to_triangles) {
+            if (triangles.size() == 1) {
+                boundary_edges.push_back(edge);
             }
         }
-        std::sort(boundary.begin(), boundary.end());
-        boundary.erase(std::unique(boundary.begin(), boundary.end()), boundary.end());
+        return boundary_edges;
+    }
 
-        double s = 0.0;
-        for (size_t i = 0; i < boundary.size(); ++i) {
-            int next = (i + 1) % boundary.size();
-            s += (vertices[boundary[next]] - vertices[boundary[i]]).norm();
+    std::vector<int> orderBoundaryVertices(const std::vector<Edge>& boundary_edges) {
+        std::vector<int> ordered_boundary_vertices;
+        int v_first_vertex = boundary_edges[0].vtxA;
+        int second_last_vertex = v_first_vertex;
+        int last_vertex = boundary_edges[0].vtxB;
+
+        ordered_boundary_vertices.push_back(v_first_vertex);
+        ordered_boundary_vertices.push_back(last_vertex);
+
+        while (last_vertex != v_first_vertex) {
+            auto it = std::find_if(boundary_edges.begin(), boundary_edges.end(), [&](const Edge& edge) {
+                return (edge.vtxA == last_vertex && edge.vtxB != second_last_vertex) ||
+                    (edge.vtxB == last_vertex && edge.vtxA != second_last_vertex);
+            });
+            if (it == boundary_edges.end()) {
+                throw std::runtime_error("No edge found");
+            }
+            if (it->vtxA == last_vertex) {
+                second_last_vertex = last_vertex;
+                last_vertex = it->vtxB;
+                ordered_boundary_vertices.push_back(it->vtxB);
+            } else {
+                second_last_vertex = last_vertex;
+                last_vertex = it->vtxA;
+                ordered_boundary_vertices.push_back(it->vtxA);
+            }
         }
 
+        return ordered_boundary_vertices;
+    }
+
+    double computeBoundaryLength(const std::vector<int>& ordered_boundary_vertices) {
+        double s = 0.0;
+        for (size_t i = 0; i < ordered_boundary_vertices.size() - 1; ++i) {
+            s += (vertices[ordered_boundary_vertices[i + 1]] - vertices[ordered_boundary_vertices[i]]).norm();
+        }
+        return s;
+    }
+
+    std::vector<Vector> layoutBoundaryVerticesOnCircle(const std::vector<int>& ordered_boundary_vertices, double s) {
         double cs = 0.0;
         std::vector<Vector> v_prime(vertices.size());
-        for (size_t i = 0; i < boundary.size(); ++i) {
-            double theta = 2.0 * M_PI * cs / s;
-            v_prime[boundary[i]] = Vector(cos(theta), sin(theta), 0.0);
-            int next = (i + 1) % boundary.size();
-            cs += (vertices[boundary[next]] - vertices[boundary[i]]).norm();
+        for (size_t i = 0; i < ordered_boundary_vertices.size() - 1; ++i) {
+            double theta_i = 2.0 * M_PI * cs / s;
+            v_prime[ordered_boundary_vertices[i]] = Vector(cos(theta_i), sin(theta_i), 0.0);
+            cs += (vertices[ordered_boundary_vertices[i + 1]] - vertices[ordered_boundary_vertices[i]]).norm();
         }
+        return v_prime;
+    }
 
+    std::vector<Vector> layoutInternalVertices(std::vector<Vector>& v_prime, const std::map<int, std::set<int>>& adjacency_list, const std::vector<int>& ordered_boundary_vertices, int n_iter) {
         for (int iter = 0; iter < n_iter; ++iter) {
+            std::cout << "Iteration " << iter << std::endl;
             std::vector<Vector> v_next(v_prime);
             for (size_t i = 0; i < vertices.size(); ++i) {
-                if (std::find(boundary.begin(), boundary.end(), i) != boundary.end()) {
-                    v_next[i] = v_prime[i];
+                if (std::find(ordered_boundary_vertices.begin(), ordered_boundary_vertices.end(), i) != ordered_boundary_vertices.end()) {
                     continue;
                 }
                 Vector sum(0.0, 0.0, 0.0);
                 int count = 0;
-                for (const auto& tri : indices) {
-                    if (tri.vtxi == i || tri.vtxj == i || tri.vtxk == i) {
-                        if (tri.vtxi != i) { sum = sum + v_prime[tri.vtxi]; count++; }
-                        if (tri.vtxj != i) { sum = sum + v_prime[tri.vtxj]; count++; }
-                        if (tri.vtxk != i) { sum = sum + v_prime[tri.vtxk]; count++; }
-                    }
+                for (const auto& neighbor : adjacency_list.at(i)) { // Use 'at' instead of '[]' to access the set of neighbors
+                    sum = sum + v_prime[neighbor];
+                    count++;
                 }
                 v_next[i] = sum / count;
             }
             v_prime = v_next;
         }
+        return v_prime;
+    }
 
+    // Milos Oundjian helped me grately with this
+    TriangleMesh tutte(int n_iter = 1000) {
+        std::map<Edge, std::vector<int>> edges_to_triangles = buildEdgesToTriangles();
+        std::map<int, std::set<int>> adjacency_list = buildAdjacencyList();
+        std::vector<Edge> boundary_edges = findBoundaryEdges(edges_to_triangles);
+        std::vector<int> ordered_boundary_vertices = orderBoundaryVertices(boundary_edges);
+        double s = computeBoundaryLength(ordered_boundary_vertices);
+        std::vector<Vector> v_prime = layoutBoundaryVerticesOnCircle(ordered_boundary_vertices, s);
+        v_prime = layoutInternalVertices(v_prime, adjacency_list, ordered_boundary_vertices, n_iter);
         vertices = v_prime;
         return *this;
     }
+
+    
 
     std::vector<TriangleIndex> indices;
     std::vector<Vector> vertices;
