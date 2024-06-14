@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geometry Processing/build",
-  "command": "/usr/lib64/ccache/g++ -I\"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geometry Processing/stb\" -g -std=gnu++17 -o CMakeFiles/Geometry.dir/main.cpp.o -c \"/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geometry Processing/main.cpp\"",
-  "file": "/users/eleves-a/2021/erik.dziekonski-bautista/CSE306/Geometry Processing/main.cpp",
-  "output": "CMakeFiles/Geometry.dir/main.cpp.o"
-}
-]
