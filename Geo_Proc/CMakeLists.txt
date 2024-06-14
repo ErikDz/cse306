@@ -20,6 +20,7 @@ set(SOURCES
 include_directories(stb)
 include_directories(liblbfgs)
 include_directories(utils)
+include_directories(Eigen)
 
 # Add the header files for proper compilation
 set(HEADERS

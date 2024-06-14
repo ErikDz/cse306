@@ -7,6 +7,8 @@
 #include <numeric>
 #include <iterator>
 #include <random>
+#include <chrono>
+#include <fstream>
 
 #include "svg.h"
 #include "fluid.h"
@@ -62,7 +64,7 @@ int main() {
 }*/
 //For fluid simulation:
 int main() {
-    int point_count = 20;
+    int point_count = 100;
     std::vector<Vector> positions(point_count);
     std::vector<Vector> velocities(point_count);
     std::vector<double> weights(point_count, 0);
@@ -79,7 +81,18 @@ int main() {
     }
 
     for (int time = 0; time < 100; ++time) {
+        // we record the time each iteration took and save it to a .txt
+        auto start = std::chrono::high_resolution_clock::now();
         gal_step(positions, velocities, weights, time);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> elapsed = end - start;
+
+        std::ofstream time_file;
+        // we append it
+        time_file.open("time.txt", std::ios_base::app);
+        time_file << elapsed.count() << std::endl;
+        time_file.close();
     }
 
     return 0;

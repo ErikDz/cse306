@@ -1,6 +1,7 @@
 #include "fluid.h"
 #include <cmath>
 
+// Define the compute_hessian function
 
 /*
 References:
@@ -98,6 +99,7 @@ lbfgsfloatval_t calculate_final_cost(
 // Due to problems with import
 // Got the suggestion to fix my bug from a stackoverflow post (lost it), this one helped implement: https://stackoverflow.com/questions/20737987/extern-c-when-exactly-to-use/20738072#20738072
 // I apologise if this is not the best way to fix the problem; couldn't find a better solution
+/**/
 extern "C" lbfgsfloatval_t eval_f(
     void *point_instance,
     const lbfgsfloatval_t *weight_set,
@@ -109,8 +111,8 @@ extern "C" lbfgsfloatval_t eval_f(
     std::vector<Polygon> fluid_diagram_set = construct_fluid(point_set, weight_set, point_count);
     
     double total_fluid_area_sum = 0.0;
-    const double fluid_fraction_const = 0.4;
-    const double air_fraction_const = 0.6;
+    const double fluid_fraction_const = 0.4; //0.4
+    const double air_fraction_const = 0.6; //0.6
     const double desired_area = fluid_fraction_const / (point_count-1);
     lbfgsfloatval_t total_cost = calculate_total_cost(
         fluid_diagram_set, weight_set, grad_set, point_set, point_count, desired_area, total_fluid_area_sum

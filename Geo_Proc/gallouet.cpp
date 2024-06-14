@@ -39,8 +39,8 @@ void apply_forces_and_update(std::vector<Vector> &pos_list, std::vector<Vector> 
 
 void gal_step(std::vector<Vector> &pos_list, std::vector<Vector> &vel_list, std::vector<double> &wt_list, int ts) {
     const double m = 200.0;
-    const double eps = 0.04;
-    const double dt = 0.05;
+    const double eps = 0.004;
+    const double dt = 0.02;
     double eps2 = std::pow(eps, 2);
 
     int np = pos_list.size();
