@@ -35,7 +35,6 @@ Vector Cross(const Vector& a, const Vector& b) {
     return Vector(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
 
-
 Vector RandomDirection() {
     double r1 = static_cast<double>(rand()) / RAND_MAX;
     double r2 = static_cast<double>(rand()) / RAND_MAX;
@@ -45,6 +44,7 @@ Vector RandomDirection() {
     return Vector(x, y, z);
 }
 
+//https://github.com/vrushank-agrawal/CSE306
 void ColorMatching(int width, int height, int num_channels, int num_color_channels,
                    unsigned char* image_data, unsigned char* color_data) {
     size_t num_pixels = width * height;
